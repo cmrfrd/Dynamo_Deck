@@ -10,7 +10,7 @@ class deck(object):
         self.card_list = []
         self.missing_cards = []
         
-        self.add_cards(args)
+        self.add_cards(*args)
     
     @staticmethod
     def all_cards_or_decks(*args):
@@ -22,27 +22,6 @@ class deck(object):
         '''
         all(isinstance(cd, (card, deck)) for cd in args)
         
-    @staticmethod
-    def slice_deck_card(*args):
-        '''
-        name : slice_deck_card
-        arguments : Object card(s), Object deck(s)
-        return : List Object Card, List Object Deck
-        Method slices input to cards, and decks
-        '''
-        cards = []
-        decks = []
-        if deck.all_cards_or_decks(*args):
-            for s in args:
-                if isinstance(s, card):
-                    cards.append(s)
-                elif isinstance(s, deck):
-                    decks.append(s)
-                else:
-                    pass
-                    #raise error
-            return cards, decks
-        return cards, decks
     
     def pick_card(self, remove=True, location=0):
         '''
@@ -52,7 +31,13 @@ class deck(object):
         Method picks a card by an index "location". 
         Places cards in buffer "missing_cards"
         '''
-        
+        if remove:
+            return self.remove_card(location)
+            
+        self.missing_cards.extend(self.card_list[location])
+        #extend "missing cards"
+        return self.missing_cards[-1]
+        #get the card by getting last card
     
     def pick_cards(self, remove=True, *args):
         '''
@@ -63,7 +48,7 @@ class deck(object):
         '''
         if remove:
             return self.remove_cards(args)
-        self.missing_cards.extend([self.card_list.pop(i) for i in args])
+        self.missing_cards.extend([self.pick_card(remove, i) for i in args])
         #entend "missing cards"
         return self.missing_cards[-len(args):]
         #get those cards by slicing the length of the inputs
@@ -77,8 +62,10 @@ class deck(object):
         based on location
         '''
         if isinstance(card_input, card):
-            self.card_list.insert(location, card_input)
-            return True
+            if card_input in self.missing_cards:
+                self.missing_cards.remove()
+                self.card_list.insert(location, card_input)
+                return True
         return False
     
     def add_cards(self, location=0,*args):
@@ -90,12 +77,11 @@ class deck(object):
         them in order based on the location
         '''
         if deck.all_cards_or_decks(*args):
-            #cards, decks = deck.slice_deck_card(args)
             for s in args:
                 if isinstance(s, card):
                     self.add_card(location, s)
                 elif isinstance(s, deck):
-                    decks.add_deck(s)
+                    self.add_deck(location, s)
                 else:
                     pass
                     #raise error
@@ -108,6 +94,7 @@ class deck(object):
         name : add_missing_card
         arguments : Object Card
         return : boolean
+        adds a mising card to the missing card list
         '''
         if isinstance(card_input, card):
             self.missing_cards.append(card_input)
@@ -119,29 +106,57 @@ class deck(object):
         name : add_missing_cards
         arguments : Object Cards
         return : boolean
+        adds multiple missing cards to the missing
+        card list
         '''
-        if deck.all_cards_or_decks(*args):
-            
+        if all(isinstance(cd, card) for cd in args):
+            for c in args:
+                if self.add_missing_card(c)):
+                    pass
+                else:
+                    return False
             return True
         return False
         
-    def add_decks(self, location=0,*args):
+    def add_deck(self, location=0, deck_input):
+        '''
+        name : add_deck
+        arguments : object Deck
+        return : boolean
+        Method takes a deck of cards as input and adds to deck
+        '''
+        if isinstance(deck_input, deck):
+            c, m = self.get_deck_data()
+            if self.add_cards(c):
+                if self.add_missing_cards(m):
+                    return True
+        return False
+        
+    def add_decks(self, location=0, *args):
         '''
         name : add_decks
         arguments : object Deck or Object Card
         return : boolean
-        Method takes a deck of cards as input and adds to deck
+        Method takes decks of cards as input and adds to deck
         '''
         if deck.all_cards_or_decks(*args):
             for select in args:
                 if isinstance(select, card):
-                    self.add_cards()
+                    self.add_card()
                 elif isinstance(select, deck):
-                    self.add_decks(select)
+                    self.add_deck(location, select)
                 location += 1
             return True
         return False
-        
+    
+    def remove_card(self, location=0):
+        '''
+        name : remove_card
+        arguments : int
+        return : Object card
+        method removes card from deck and returns it
+        '''
+        return self.card_list.pop(location)
     
     def remove_cards(self, *args):
         '''
@@ -152,11 +167,11 @@ class deck(object):
         them in a list to the user. If unused, cards are
         deleted
         '''
-        return [self.card_list.pop(i) for i in args]
+        return [self.remove_card(i) for i in args]
         
-    def get_card_data(self):
+    def get_deck_data(self):
         '''
-        name : get_card_data
+        name : get_deck_data
         arguments : None
         return : listObject Card, listObject Card
         Method returns the deck, and the missing cards
