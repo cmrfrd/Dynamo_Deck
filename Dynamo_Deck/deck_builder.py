@@ -85,7 +85,7 @@ class IterMethod_Dict(dict):
 
         elif iterator_function == itertools.chain:
             #unpack the list of iters into chain, returns first iterator as the name
-            return [iter_func_args[0]], iterator_function(*iter_func_args)
+            return [iter_func_args[0]], iterator_function(*[attributes[attrib_arg] for attrib_arg in iter_func_args])
 
         else:
             #gets the names, then flatten list and add args to iterfunc
@@ -131,8 +131,10 @@ class Deck_Builder(object):
         deck building program and will return a deck object to 
         the user to manipulate
         '''
-        pass
-        
+        if instruction == None:
+            pass
+        else:
+            self.load_instruction(instruction)
 
     def make_card_face_iter(self, card_instruction_face, deck_attributes):
         '''
