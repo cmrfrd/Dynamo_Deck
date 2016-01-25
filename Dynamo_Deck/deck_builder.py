@@ -4,17 +4,17 @@ from copy import deepcopy
 from deck import deck
 from card import card
 
-def flatten_list(layers, *input_list):
-    '''
-    this function is just so useful
-    I had to make it global to all the
-    classes
-    '''
-    return (flattened_element 
-                for element in input_list
-                for flattened_element in 
-                (flatten_list(layers-1, *element) 
-                if isinstance(element, (tuple, list)) and layers>-1 else (element,)))
+flatten_list = lambda layers, *input_list:   \
+                   (flattened_element         \
+                   for element in input_list   \
+                       for flattened_element in (flatten_list(layers-1, *element) 
+                           if isinstance(element, (tuple, list)) and layers>-1
+                           else (element,)))
+#this function is just so useful
+#I had to make it global to all the
+#classes
+
+
 
 class Arribute_Dict(dict):
     '''
