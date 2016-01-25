@@ -114,32 +114,32 @@ example: Standard deck of 52
             
                 "name":"attr3",       <-----referring to "attributes"
                 
+                "chain":["attr3"],
+
                 "izip_longest":{
                     "iters":["attr2","attr4"],
                     "value_fill":""   <-----optional (dflt to none)
-                }
+                },
 
                 "product":{
                     "iters":["attr2","attr4"],
                     "repeat":1        <-----optional (dflt to 1)
-                }
+                },
 
                 "permutations":{
                     "iter":"attr4",
                     "r":2             <-----optional (dflt to length of iter)
-                }
+                },
 
                 "combinations":{
                     "iter":"attr2",
                     "r":2             <-----must have
-                }
+                },
 
                 "combinations_with_replacement":{
                     "iter":"attr2",
                     "r":2             <-----must have
                 }
-
-                "chain":["attr3"]
 
                 ^----only the first one of these is used,
                     be sure naming convention is not any of these

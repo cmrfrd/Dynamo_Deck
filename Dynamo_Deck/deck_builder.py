@@ -88,13 +88,18 @@ class IterMethod_Dict(dict):
             return [iter_func_args[0]], iterator_function(*[attributes[attrib_arg] for attrib_arg in iter_func_args])
 
         else:
-            #gets the names, then flatten list and add args to iterfunc
-            list_vals = iter_func_args.values()
-            names = list_vals[0] if isinstance(list_vals[0],list) else [list_vals[0]]
-            flattened_list = list(flatten_list(1, list_vals))
-            iter_args = [attributes[element_arg] for element_arg in flattened_list]
-            return names, iterator_function(*iter_args)
+            #
 
+            #gets the names, then flatten list and add args to iterfunc
+            iter_func_args = iter_func_args.iteritems()
+
+            names = iter_func_args[0][-1]
+            names = names if isinstance(names,list) else [names]
+            #get list of names
+
+            iter_args = [attributes[name] for name in names]
+            if len(iter_func_args)==2:iter_args.append(iter_func_args[-1])
+            return names, iterator_function(*iter_args)
 
 class Deck_Builder(object):
     '''
