@@ -116,27 +116,34 @@ example: Standard deck of 52
                 
                 "chain":["attr3"],
 
+                "izip":["attr3"],
+
                 "izip_longest":{
+                    "name":["stuffystuff", "thingything"]
                     "iters":["attr2","attr4"],
-                    "value_fill":""   <-----optional (dflt to none)
+                    "fillvalue":""   <-----optional (dflt to none)
                 },
 
                 "product":{
+                    "names":["thingythats1","thingythats2"]
                     "iters":["attr2","attr4"],
                     "repeat":1        <-----optional (dflt to 1)
                 },
 
                 "permutations":{
                     "iter":"attr4",
+                    "name":"thingy1", <-----optional                
                     "r":2             <-----optional (dflt to length of iter)
                 },
 
                 "combinations":{
                     "iter":"attr2",
+                    "name":"thingy2", <-----optional
                     "r":2             <-----must have
                 },
 
                 "combinations_with_replacement":{
+                    "name":"thingy3"
                     "iter":"attr2",
                     "r":2             <-----must have
                 }

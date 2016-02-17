@@ -1,0 +1,15 @@
+{
+    "attributes":{
+    	"Sample_Title":"This is an example title",
+    	"A Really Cool Sequence":[561, 1105, 1729, 2465, 2821, 6601, 8911, 10585]
+    },
+    "cards":{
+    	"sequence_cards":{
+    		"chain":["A Really Cool Sequence"]
+    	},
+    	"some random cards":{
+    		"repeat":5,
+    		"Title":"Sample_Title"
+    	}
+    }
+}

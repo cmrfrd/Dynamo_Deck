@@ -26,13 +26,16 @@ class deck(object):
         return len(self.card_list)
 
     def __repr__(self):
-        return self.__str__()
+        return str(self.card_list)
 
     def __str__(self):
         return str(self.card_list)
 
     def __iter__(self):
         return self.next()
+
+    def __getitem__(self,index):
+        return self.card_list[index]
 
     def next(self): # Python 3: def __next__(self)
         for card in self.card_list:

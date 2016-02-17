@@ -37,7 +37,7 @@ class card(dict):
         "flipped" state
         '''
         self.is_face_up = not self.is_face_up
-        return self.is_face_up
+        return self.read()
     
     def read(self):
         '''
@@ -69,7 +69,12 @@ class card(dict):
         overwritten str method to ensure data encapsulation 
         of inherited dict object
         '''
-        return str(self.read())
+        return self.read()
+
+    def __repr__(self):
+        '''
+        '''
+        return self.read()
         
 class card_face(dict):
     '''

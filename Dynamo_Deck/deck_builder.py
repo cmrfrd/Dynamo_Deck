@@ -38,10 +38,13 @@ class Dict(dict):
     layer of the dict and no other subdicts. This inherited class
     applies the same functionality to all subdicts
     '''
-    def __init__(self, *args, **kwargs):
-        self.update(*args, **kwargs)
 
     def __getitem__(self, key):
+        '''
+        This method is designed so that any subdicts
+        when accessed have the same property as the
+        main dict
+        '''
         val = dict.__getitem__(self, key)
         if isinstance(val, dict):
             return Dict(val)
@@ -53,7 +56,7 @@ class Dict(dict):
             return 1
         elif key in ["attributes", "cards", "front_face", "back_face"]:
         #instructions without "attributes", default to empty attribute dict
-            return Dict()
+            return Dict({})
         return False
 
     def iteritems(self):
@@ -68,6 +71,7 @@ class IterMethod_Dict(dict):
     when searching for an itertools method
     default is repeat
     '''
+
     def __missing__(self, key):
         return itertools.repeat
 
@@ -77,29 +81,58 @@ class IterMethod_Dict(dict):
         the itertools function, and the arguments
         turns arguments into a dict iterator
         '''
+        combinatoric_functions = [
+            itertools.permutations,
+            itertools.combinations,
+            itertools.combinations_with_replacement
+        ]
+
+        iterative_functions = [
+            itertools.chain, 
+            itertools.izip
+        ]
+
+        iterative_list_functions = [
+            itertools.izip_longest,
+            itertools.product
+        ]
+
         iterator_function = self[iter_func]
 
         if iterator_function == itertools.repeat:
             #return the name of the value, and the function
             return [iter_func], iterator_function(attributes[iter_func_args])
 
-        elif iterator_function == itertools.chain:
+        elif iterator_function in iterative_functions:
             #unpack the list of iters into chain, returns first iterator as the name
             return [iter_func_args[0]], iterator_function(*[attributes[attrib_arg] for attrib_arg in iter_func_args])
 
+        elif iterator_function in combinatoric_functions:
+            #unpacks vals accordingly into combinatoric funcs
+            
+            iter_name = iter_func_args["iter"] if "iter" in iter_func_args.keys() else raise KeyError("Necessary argument 'iters' in card instruction")
+            value_name = iter_func_args["name"] if "name" in iter_func_args.keys() else iter_name
+            r = iter_func_args["r"]
+            #evaluate the necessary args
+
+            return [iter_name, iterator_function(*[attributes[attrib_arg] for attrib_arg in iter_func_args])]
+        
+        elif iterator_function in iterative_list_functions:
+            #unpacks accordingly into iterfuncs accordingly
+            iters = iter_func_args.values()[0]
+            iters = iters if isinstance(iters,list) else [iters]
+            #get list of iters for first arg
+
+            iter_args = [attributes[iter_name] for iter_name in iters]
+
+            if len(iter_func_args)==2:
+                iter_args.append(iter_func_args[-1])
+            #add that little tid bit arg
+
+            return iters, iterator_function(*iter_args)
+
         else:
-            #
-
-            #gets the names, then flatten list and add args to iterfunc
-            iter_func_args = iter_func_args.iteritems()
-
-            names = iter_func_args[0][-1]
-            names = names if isinstance(names,list) else [names]
-            #get list of names
-
-            iter_args = [attributes[name] for name in names]
-            if len(iter_func_args)==2:iter_args.append(iter_func_args[-1])
-            return names, iterator_function(*iter_args)
+            raise ValueError("Bad iterator function")
 
 class Deck_Builder(object):
     '''
@@ -123,7 +156,8 @@ class Deck_Builder(object):
                                 "permutations":itertools.permutations,
                                 "combinations":itertools.combinations,
                                 "combinations_with_replacement":itertools.combinations_with_replacement,
-                                "chain":itertools.chain
+                                "chain":itertools.chain,
+                                "izip":itertools.izip
                         }
                 )
     
@@ -247,19 +281,10 @@ class Deck_Builder(object):
             return False
 
         if not raise_error: 
-            instruction_dict = Dict(instruction)
+            instruction_dict = Dict(instruction_dict)
 
         self.all_instructions.append(instruction_dict)
         return True
-    
-    @staticmethod
-    def get_func_from_string(func_name):
-        '''
-        name : get_func_from_string
-        arguments : func_name string
-        return : function
-        gets the associated function from
-        '''
 
     @staticmethod
     def filepath_to_dict(path):
@@ -271,6 +296,7 @@ class Deck_Builder(object):
         to a json file
         ''' 
         instruction_file = open(path,"r").read()
+        instruction_file = instruction_file.replace("'", "\"")
         return json.loads(instruction_file)
     
     @staticmethod
