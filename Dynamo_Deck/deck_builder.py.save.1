@@ -57,7 +57,7 @@ class Dict(dict):
         elif key in ["attributes", "cards", "front_face", "back_face"]:
         #instructions without "attributes", default to empty attribute dict
             return Dict({})
-        return None
+        return False
 
     def iteritems(self):
         for key, value in dict.iteritems(self):
@@ -110,7 +110,7 @@ class IterMethod_Dict(dict):
         elif iterator_function in combinatoric_functions:
             #unpacks vals accordingly into combinatoric funcs		
 	    assert "iter" not in iter_func_args.keys()
-	    #"iter" must be in functino definition	    
+	    #"iter" must be in the function definition
 
             iter_name = iter_func_args["iter"]
             value_name = iter_func_args["name"] if "name" in iter_func_args.keys() else iter_name
@@ -121,18 +121,17 @@ class IterMethod_Dict(dict):
         
         elif iterator_function in iterative_list_functions:
             #unpacks accordingly into iterfuncs accordingly
-	    assert "iters" in iter_func_args.keys()
-	    #make sure "iter" is in function definition
+	    assert "iter" in iter_func_args.keys()
 
-            iters = iter_func_args["iters"]
+            iters = iter_func_args["iter"]
 		
-	    card_values_names = iter_func_args["iters"]
+	    card_values_names = iter_func_args["iter"]
 	    if "names" in iter_func_args.keys():
 	        values_names = iter_func_args["names"]
 		card_values_names = values_names+card_values_names[len(values_names):]
 	    #the names for each value have been determined
 	    #variable name card_values_names
-		
+
             iter_args = [attributes[iter_name] for iter_name in iters]
 	    #get the iterators from the attributes by the names in "iters"
 
@@ -143,7 +142,7 @@ class IterMethod_Dict(dict):
 	    elif iterator_function == itertools.izip_longest:
 		additional_arg["fillvalue"] = iter_func_args["fillvalue"]
 
-            return card_values_names, iterator_function(*iter_args, **additional_arg)
+            return card_value_names, iterator_function(*iter_args, **additional_arg)
 
         else:
             raise ValueError("Bad iterator function")

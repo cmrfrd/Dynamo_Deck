@@ -25,11 +25,8 @@ class deck(object):
     def __len__(self):
         return len(self.card_list)
 
-    def __repr__(self):
-        return str(self.card_list)
-
-    def __str__(self):
-        return str(self.card_list)
+    def get_cards(self):
+	return self.card_list
 
     def __iter__(self):
         return self.next()
@@ -50,7 +47,7 @@ class deck(object):
     def pick_card(self, remove=True, location=0):
         '''
         name : pick_card
-        arguments : int, boolean
+        arguments : boolean, int
         return : Object Card
         Method picks a card by an index "location". 
         Places cards in buffer "missing_cards"

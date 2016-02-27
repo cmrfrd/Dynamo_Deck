@@ -13,7 +13,6 @@ class card(dict):
         self.__front_face = self.create_face('front_face')
         self.__back_face = self.create_face('back_face')
         #^use create_face method to encapsulate each face of card
-
         
     def create_face(self, face):
         '''
@@ -24,9 +23,8 @@ class card(dict):
         '''
         face_dict = self[face]
         if face_dict:
-            return card_face(face_dict)
-        return card_face({})
-        
+            return face_dict
+        return {}
     
     def flip(self):
         '''
@@ -48,8 +46,8 @@ class card(dict):
         by the is_face_up object variable
         '''
         if self.is_face_up:
-            return self.__front_face.read()
-        return self.__back_face.read()
+            return str(self.__front_face)
+        return str(self.__back_face)
         
     def __missing__(self, key):
         '''
@@ -80,12 +78,12 @@ class card_face(dict):
     '''
     this class represents the face of a single card
     '''
-    def __init__(self, *args, **kwargs):
+    def __init__(self, input_dict):
         '''initialize card object'''
-        super(self.__class__, self).update(*args, **kwargs)
-    def read(self):
-        return self
-        
+        self = dict.update(input_dict)
+
+    def __str__(self):
+        return super(self)
         
 if __name__ == "__main__":
     data = {
