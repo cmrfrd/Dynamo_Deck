@@ -14,6 +14,7 @@ for each group of cards you want to make.
 
 Card instructions are made as follows
 
+'''
 "card_instruction_name":{                <------name of the card instruction
     "repeat":5,                          <------times you want the instruction repeated.
                                                 This is an optional argument and will 
@@ -23,6 +24,7 @@ Card instructions are made as follows
     "back_face":{
     }
 }
+'''
 
 The general template goes as follows..
 
