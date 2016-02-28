@@ -1,90 +1,30 @@
-##################################
-These files are designed to simulate a deck of cards for any game.
+#DYNAMO_DECK
+####A dynamic card creator
 
-unique and sequential cards can be created via JSON input
+######About
+This library is designed to simulate a deck of cards for games or 
+anything else really that would want to use cards for.
 
-Card
-|____Attributes
-|   |_face_in_view:bool
-|   |_Attributes:dict
-|   |_
-|   
-|
-|____Methods
-    |_flip_card():bool
-    |_read():dict
-    
-Deck
-|____Attributes
-|   |_number_of_cards:int
-|   |_probobility_distibution:list
-|   |_
-|   
-|
-|____Methods
-    |_raise_likelyhood():list
-    |_remove_card():bool
-    |_shuffle():bool
-    |_show_all():dict
-    |_
+Using a special JSON instruction template you can create sequences of cards 
 
-deck object has
-    card object
+######Template Construction
+So templates are split into 2 main areas --attributes-- and --cards--. --attributes-- contain 
+ant sort of string, list, or custom generator. --cards-- contain different instruction sets
+for each group of cards you want to make.
 
-deck builder has
-    static_card_builder
+Card instructions are made as follows
 
-{
-    "unique_cards":{
-        "card_1": {
-            "front_face":{
-                 "name":"card 1",
-                 "description":"",
-                 "attributes":{}
-            },
-            "back_face":{}
-        }
+"card_instruction_name":{                <------name of the card instruction
+    "repeat":5,                          <------times you want the instruction repeated.
+                                                This is an optional argument and will 
+                                                default to 1 if not provided
+    "front_face":{                       <------
     },
-    "sequential_cards":{
-        "seq1":{
-            "repeat":1,
-            "front_face":{
-                 "attributes_constant":{
-                     "name":"sequential_card"
-                 },
-                 "attributes_variable":{
-                     "arrays":{
-                         "array_1":["a","b","c","d"]
-                     },
-                     "organization":"sequential"
-                 }
-            },
-            "back_face":{}
-        }
+    "back_face":{
     }
 }
 
-example: Standard deck of 52
-
-{
-    "sequential_cards":{
-        "deck_52":{
-            "front_face":{
-                "attribute_variables":{
-                    "arrays":{
-                        "suit":["H","S","C","D"],
-                        "value":[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
-                    },
-                    "product":{
-                        "iters":["suit",""],
-                        "repeat":
-                    }
-                }
-            }
-        }
-    }
-}
-
+The general template goes as follows..
 
 {
     "attributes":{
@@ -93,8 +33,9 @@ example: Standard deck of 52
         "attr3":"Name_Example",
         "attr4":['a','b','c','d'],
         "attr5":null
-        ...                           <-----as many as you like
-    }
+        ...                           <-----add as many attributes as you like
+                                            Custom Generators can also be added 
+    },
     "cards":{
 
         "a_static_card":{
