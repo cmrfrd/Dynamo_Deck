@@ -8,7 +8,7 @@ anything else really that would want to use cards for.
 Using a special JSON instruction template you can create sequences of cards 
 
 ####Template Construction
-So templates are split into 2 main areas ~~attributes~~ and ~~cards~~. ~~attributes~~ contain 
+So templates are split into 2 main areas **attributes** and **cards**. **attributes** contain 
 ant sort of string, list, or custom generator. ~~cards~~ contain different instruction sets
 for each group of cards you want to make.
 
