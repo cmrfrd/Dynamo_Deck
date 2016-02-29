@@ -13,7 +13,7 @@ ant sort of string, list, or custom generator. ~~cards~~ contain different instr
 for each group of cards you want to make.
 
 Deck instructions are made as follows:
-```
+```json
 {
     "attributes":{                      <------"attributes" is a key word that contains
                                                 all the information that "cards" will
@@ -34,7 +34,7 @@ Deck instructions are made as follows:
 
 Inside of the 'deck' template we need to define 'cards' or else we will end up 
 with an empty deck. Basic Card instructions are made as follows:
-```
+```json
 "card_instruction_name":{                <------name of the card instruction
     "repeat":5,                          <------times you want the instruction repeated.
                                                 This is an optional argument and will 
@@ -75,7 +75,7 @@ is longer than the other, Dynamo_Deck uses [izip_longest](https://docs.python.or
 value is {}.
 
 A general template for an entire deck instruction goes as follows:
-```
+```json
 {
     "attributes":{
         "attr1":5,
@@ -156,7 +156,7 @@ A general template for an entire deck instruction goes as follows:
 
 
 deck_52
-```
+```json
 {
     "attributes":{
         "value": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
