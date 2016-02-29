@@ -98,7 +98,7 @@ A general template for an entire deck instruction goes as follows:
             
                 "name":"attr3",       <-----referring to "attributes"
                 
-                "chain":["attr3"],    <-----Uses [chain](https://docs.python.org/2/library/itertools.html#itertools.chain) method
+                "chain":["attr3"],    <-----Uses [`chain`](https://docs.python.org/2/library/itertools.html#itertools.chain) method
 
                 "izip":["attr3"],     <-----Uses [izip](https://docs.python.org/2/library/itertools.html#itertools.izip) method
 
