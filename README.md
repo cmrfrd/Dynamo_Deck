@@ -59,6 +59,17 @@ Face instructions can get a little tricky because the methods used are built off
 the [itertools](https://docs.python.org/2/library/itertools.html) library. Look at
 how to use itertools to understand how each of the methods work. 
 
+Itertools methods used:
+[repeat](https://docs.python.org/2/library/itertools.html#itertools.repeat)
+[chain](https://docs.python.org/2/library/itertools.html#itertools.chain)
+[izip](https://docs.python.org/2/library/itertools.html#itertools.izip)
+[izip_longest](https://docs.python.org/2/library/itertools.html#itertools.izip_longest)
+[permutations](https://docs.python.org/2/library/itertools.html#itertools.permutations)
+[combinations](https://docs.python.org/2/library/itertools.html#itertools.combinations)
+[combinations_with_replacement](https://docs.python.org/2/library/itertools.html#itertools.combinations_with_replacement)
+[product](https://docs.python.org/2/library/itertools.html#itertools.product)
+
+
 **You may notice you can create 2 sequences of cards for either face. If one sequence
 is longer than the other, Dynamo_Deck uses [izip_longest](https://docs.python.org/2/library/itertools.html#itertools.izip_longest) for future cards and the fill
 value is {}.
@@ -98,35 +109,35 @@ A general template for an entire deck instruction goes as follows:
             
                 "name":"attr3",       <-----referring to "attributes"
                 
-                "chain":["attr3"],    <-----Uses [`chain`](https://docs.python.org/2/library/itertools.html#itertools.chain) method
+                "chain":["attr3"],    <-----Uses chain method
 
-                "izip":["attr3"],     <-----Uses [izip](https://docs.python.org/2/library/itertools.html#itertools.izip) method
+                "izip":["attr3"],     <-----Uses izip method
 
-                "izip_longest":{      <-----Uses [izip_longest](https://docs.python.org/2/library/itertools.html#itertools.izip_longest) method
+                "izip_longest":{      <-----Uses izip_longest method
                     "name":["stuffystuff", "thingything"]
                     "iters":["attr2","attr4"],
                     "fillvalue":""   <-----optional (dflt to none)
                 },
 
-                "product":{           <-----Uses [product](https://docs.python.org/2/library/itertools.html#itertools.product) method
+                "product":{           <-----Uses product method
                     "names":["thingythats1","thingythats2"]
                     "iters":["attr2","attr4"],
                     "repeat":1        <-----optional (dflt to 1)
                 },
 
-                "permutations":{      <-----Uses [permutations](https://docs.python.org/2/library/itertools.html#itertools.permutations) method
+                "permutations":{      <-----Uses permutations method
                     "iter":"attr4",
                     "name":"thingy1", <-----optional                
                     "r":2             <-----optional (dflt to length of iter)
                 },
 
-                "combinations":{      <-----Uses [combinations](https://docs.python.org/2/library/itertools.html#itertools.combinations) method
+                "combinations":{      <-----Uses combinations method
                     "iter":"attr2",
                     "name":"thingy2", <-----optional
                     "r":2             <-----must have
                 },
 
-                "combinations_with_replacement":{        <-------Uses [combinations_with_replacement](https://docs.python.org/2/library/itertools.html#itertools.combinations_with_replacement) method
+                "combinations_with_replacement":{        <-------Uses combinations_with_replacement method
                     "name":"thingy3"
                     "iter":"attr2",
                     "r":2             <-----must have
