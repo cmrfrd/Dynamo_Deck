@@ -9,7 +9,7 @@ Using a special JSON instruction template you can create sequences of cards
 
 ####Template Construction
 So templates are split into 2 main areas **attributes** and **cards**. **attributes** contain 
-ant sort of string, list, or custom generator. ~~cards~~ contain different instruction sets
+ant sort of string, list, or custom generator. **cards** contain different instruction sets
 for each group of cards you want to make.
 
 Deck instructions are made as follows:
@@ -21,7 +21,7 @@ Deck instructions are made as follows:
         "1through5":[1,2,3,4,5],
         "4names":["Alex","Bobby","Liam","Chase"],
         "pi":3.14159
-                                        ^------"each of these key,value pairs are attributes
+                                        ^------each of these key,value pairs are attributes
                                                that can be reffered to in "cards". 
     },
     "cards":{                           <------"cards" is a key word that will contain
@@ -35,8 +35,9 @@ Deck instructions are made as follows:
 Inside of the 'deck' template we need to define 'cards' or else we will end up 
 with an empty deck. Basic Card instructions are made as follows:
 ```
-"card_instruction_name":{                <------name of the card instruction
-    "repeat":5,                          <------times you want the instruction repeated.
+"card_instruction_name":{                <------name of the card instruction, can be any string
+    "repeat":5,                          <------"repeat" is a key word and (as it says) repeats
+                                                the instruction as many times as you want.
                                                 This is an optional argument and will 
                                                 default to 1 if not provided
     "front_face":{                       <------"front_face" is a key word that will
@@ -60,19 +61,18 @@ the [itertools](https://docs.python.org/2/library/itertools.html) library. Look 
 how to use itertools to understand how each of the methods work. 
 
 Itertools methods used:
-[repeat](https://docs.python.org/2/library/itertools.html#itertools.repeat)
-[chain](https://docs.python.org/2/library/itertools.html#itertools.chain)
-[izip](https://docs.python.org/2/library/itertools.html#itertools.izip)
-[izip_longest](https://docs.python.org/2/library/itertools.html#itertools.izip_longest)
-[permutations](https://docs.python.org/2/library/itertools.html#itertools.permutations)
-[combinations](https://docs.python.org/2/library/itertools.html#itertools.combinations)
-[combinations_with_replacement](https://docs.python.org/2/library/itertools.html#itertools.combinations_with_replacement)
+[repeat](https://docs.python.org/2/library/itertools.html#itertools.repeat),
+[chain](https://docs.python.org/2/library/itertools.html#itertools.chain),
+[izip](https://docs.python.org/2/library/itertools.html#itertools.izip),
+[izip_longest](https://docs.python.org/2/library/itertools.html#itertools.izip_longest),
+[permutations](https://docs.python.org/2/library/itertools.html#itertools.permutations),
+[combinations](https://docs.python.org/2/library/itertools.html#itertools.combinations),
+[combinations_with_replacement](https://docs.python.org/2/library/itertools.html#itertools.combinations_with_replacement),
 [product](https://docs.python.org/2/library/itertools.html#itertools.product)
 
 
-**You may notice you can create 2 sequences of cards for either face. If one sequence
-is longer than the other, Dynamo_Deck uses [izip_longest](https://docs.python.org/2/library/itertools.html#itertools.izip_longest) for future cards and the fill
-value is {}.
+**IMPORTANT**: You may notice you can create 2 sequences of cards for either face. If one sequence
+is longer than the other, Dynamo_Deck uses [izip_longest](https://docs.python.org/2/library/itertools.html#itertools.izip_longest) with a fillvalue of {} (empty card).
 
 A general template for an entire deck instruction goes as follows:
 ```
