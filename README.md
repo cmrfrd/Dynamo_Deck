@@ -74,8 +74,17 @@ Itertools methods used:
 [combinations_with_replacement](https://docs.python.org/2/library/itertools.html#itertools.combinations_with_replacement),
 [product](https://docs.python.org/2/library/itertools.html#itertools.product)
 
-**IMPORTANT**: You may notice you can create 2 sequences of cards for either face. If one sequence
+###Three important things to mention:
+
+1. You may notice you can create 2 sequences of cards for either face. If one sequence
 is longer than the other, Dynamo_Deck uses [izip_longest](https://docs.python.org/2/library/itertools.html#itertools.izip_longest) with a fillvalue of {} (empty face).
+
+2. In addition to that it is also important that Dynamo_Deck won't allow you to combine itertools
+methods together (unless you define your own custom generator) because no one wants to get
+all the permutations of a combination of numbers... NO ONE.
+
+3. An optional argument "name" or "names" is provided so instead of the key to the name defaulting 
+to what it is reffered to in "attributes", you can provide your own custom names.
 
 A general template for an entire deck instruction goes as follows with the addition of
 card instructions
