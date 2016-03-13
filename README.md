@@ -10,8 +10,11 @@ Using a special JSON instruction template you can create sequences of cards
 ####Template Construction
 So templates are split into 2 main areas **attributes** and **cards**.
 
-**attributes** contain any sort of string, list, or custom generator. **cards** 
-contain different instruction sets for each group of cards you want to make.
+**attributes** must contain any sort of generator, if it isn't, Dynamo_Deck will
+make it a generator. 
+
+**cards** contain different instruction sets for each group of cards you want to 
+make.
 
 Deck instructions are made as follows:
 ```
@@ -33,10 +36,10 @@ Deck instructions are made as follows:
 ```
 
 
-Inside of the 'deck' template we need to define 'cards' or else we will end up 
+Inside of the "cards" template we need to define groups of cards, or else we will end up 
 with an empty deck. Basic Card instructions are made as follows:
 ```
-"card_instruction_name":{                <------name of the card instruction, can be any string
+"card_instruction_name":{                <------name of the card instruction
     "repeat":5,                          <------"repeat" is a key word and (as it says) repeats
                                                 the instruction as many times as you want.
                                                 This is an optional argument and will 
@@ -71,11 +74,11 @@ Itertools methods used:
 [combinations_with_replacement](https://docs.python.org/2/library/itertools.html#itertools.combinations_with_replacement),
 [product](https://docs.python.org/2/library/itertools.html#itertools.product)
 
-
 **IMPORTANT**: You may notice you can create 2 sequences of cards for either face. If one sequence
-is longer than the other, Dynamo_Deck uses [izip_longest](https://docs.python.org/2/library/itertools.html#itertools.izip_longest) with a fillvalue of {} (empty card).
+is longer than the other, Dynamo_Deck uses [izip_longest](https://docs.python.org/2/library/itertools.html#itertools.izip_longest) with a fillvalue of {} (empty face).
 
-A general template for an entire deck instruction goes as follows:
+A general template for an entire deck instruction goes as follows with the addition of
+card instructions
 ```
 {
     "attributes":{
@@ -92,15 +95,17 @@ A general template for an entire deck instruction goes as follows:
         "a_static_card":{             <------Name of the card(s) instruction
             "repeat":2,
             "front_face":{
-                "title":"potatoes",   <------not listed in "attributes". This
-                                             attribute will be stored as
-                                             "potatoes" because the value name
-                                             is not defined in attributes
-                "name":"attr3"        <------listed in "attributes". "attr3" will
-                                             be replaced by None
+                "title":"potatoes",   <------"potatoes" is not listed in "attributes". 
+                                             Dynamo_Deck understands that and will cause
+                                             it to be stored as "potatoes"
+                "name":"attr3"        <------"attr3" islisted in "attributes". When this
+                                             group is created, "attr3" will be replaced with
+                                             None
             }
         },
-        ...                           <------as static cards as you like
+        ...                           <------Dynamo_Deck is designed so if you want to make a 
+                                             Single card, you can! Just give the card values that
+                                             won't be turned into generators
 
         "sequential_cards_1":{
             
