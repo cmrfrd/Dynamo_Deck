@@ -192,3 +192,22 @@ with 'Jack, Queen, King'.
     }
 }
 ```
+If we want to make a deck using Dynamo_Deck and our 52 card template you would do the following.
+```Python
+from Dynamo_Deck import Deck_Builder
+from random import randrange
+
+deck_52_path = "path/to/deck_52.json"
+#filepath to our template
+
+d_builder = Deck_Builder(deck_52_path)
+#initialize our builder object with out template loaded into the object
+
+deck_52 = d_builder.make_deck()
+#make the deck loaded into the builder
+```
+```deck_52``` is now a ```deck``` object that we created and can now manipulate in memory. 
+
+To get a random card:   ```r_card = deck_52.remove_card(randrange(len(l)))```
+
+Card objects by default are <b>face down</b>. So if you ```print``` them they will appear as a ```{}```. In order to see the data we need to do ```r_card.flip()```. This enables the card to be read.
