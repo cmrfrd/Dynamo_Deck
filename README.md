@@ -2,7 +2,7 @@
 ######A dynamic card creator
 
 ####About
-This library is designed to simulate a deck of cards for games or 
+This library is designed to simulate a deck of cards in memory for games or 
 anything else really that would want to use cards for.
 
 Using a special JSON instruction template you can create sequences of cards 
@@ -211,3 +211,7 @@ deck_52 = d_builder.make_deck()
 To get a random card:   ```r_card = deck_52.remove_card(randrange(len(l)))```
 
 Card objects by default are <b>face down</b>. So if you ```print``` them they will appear as a ```{}```. In order to see the data we need to do ```r_card.flip()```. This enables the card to be read.
+
+
+####Future
+Make every deck of cards a generator so every card you grab from a deck is made on the fly.
