@@ -28,15 +28,10 @@ class Arribute_Dict(dict):
 
 class Dict(dict):
     '''
-    This is a really confusing and custom dictionary
-
-    The main functionality is whenever the value (in key,value pair)
-    is a dict, instead of returning a normal dict, it returns a dict
-    with the same functionality as this dict.
-
-    Essentially inheriting from a dict only applies to the first
-    layer of the dict and no other subdicts. This inherited class
-    applies the same functionality to all subdicts
+    This is a unique dictionary
+    
+    whenever you grab a sub-dictionary, a "Dict" is returned instead
+    of a "dict".
     '''
 
     def __getitem__(self, key):
